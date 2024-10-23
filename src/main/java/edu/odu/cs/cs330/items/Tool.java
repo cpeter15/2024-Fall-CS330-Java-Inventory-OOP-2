@@ -57,7 +57,13 @@ public class Tool extends Item {
      */
     public Tool(Tool src)
     {
+        super(src.name);
 
+        this.durability = src.durability;
+        this.speed = src.speed;
+        this.material = src.material;
+        this.modifier = src.modifier;
+        this.modifierLevel = src.modifierLevel;
     }
 
     /**
@@ -172,7 +178,12 @@ public class Tool extends Item {
     @Override
     public void read(Scanner snr)
     {
-        // Complete this method
+        super.name   = snr.next();
+        this.material = snr.next();
+        this.durability = snr.nextInt();
+        this.speed = snr.nextInt();
+        this.modifier = snr.next();
+        this.modifierLevel = snr.nextInt();
     }
 
     /**
@@ -198,8 +209,24 @@ public class Tool extends Item {
 
         Tool rhsItem = (Tool) rhs;
 
+        if (this == rhsItem) {
+            return true;
+        }
+
+        if (!this.name.equals(rhsItem.getName())) {
+            return false;
+        }
+
+        if (!this.material.equals(rhsItem.getMaterial())) {
+            return false;
+        }
+
+        if (!this.modifier.equals(rhsItem.getModifier())) {
+            return false;
+        }
+
         // Replace the next line
-        return false;
+        return true;
     }
 
     /**
@@ -220,6 +247,11 @@ public class Tool extends Item {
     @Override
     public String toString()
     {
-        return "";
+        StringBuilder strBuilder = new StringBuilder(String.format("  Nme: %s%n", this.name));
+        strBuilder.append(String.format("  Dur: %s%n", this.durability))
+                  .append(String.format("  Spd: %d%n", this.speed))
+                  .append(String.format("  Mtl: %s%n", this.material))
+                  .append(String.format("  Mdr: %s (Lvl %d)%n", this.modifier, this.modifierLevel));
+        return strBuilder.toString();
     }
 }

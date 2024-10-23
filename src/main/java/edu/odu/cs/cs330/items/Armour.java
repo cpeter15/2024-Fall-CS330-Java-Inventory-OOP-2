@@ -46,7 +46,13 @@ public class Armour extends Item {
      */
     public Armour()
     {
-
+        super("");
+        durability = 0;
+        defense = 0;
+        material = "";
+        modifier = "";
+        modifierLevel = 0;
+        element = "";
     }
 
     /**
@@ -56,7 +62,13 @@ public class Armour extends Item {
      */
     public Armour(Armour src)
     {
-
+        super(new String(src.name));
+        durability = src.durability;
+        defense = src.defense;
+        material = new String(src.material);
+        modifier = new String(src.modifier);
+        modifierLevel = src.modifierLevel;
+        element = new String(src.element);
     }
 
     /**
@@ -191,7 +203,13 @@ public class Armour extends Item {
     @Override
     public void read(Scanner snr)
     {
-
+        super.name   = snr.next();
+        this.material = snr.next();
+        this.durability = snr.nextInt();
+        this.defense = snr.nextInt();
+        this.modifier = snr.next();
+        this.modifierLevel = snr.nextInt();
+        this.element = snr.next();
     }
 
     /**
@@ -218,8 +236,28 @@ public class Armour extends Item {
 
         Armour rhsItem = (Armour) rhs;
 
+        if (this == rhsItem) {
+            return true;
+        }
+
+        if (!this.name.equals(rhsItem.getName())) {
+            return false;
+        }
+
+        if (!this.material.equals(rhsItem.getMaterial())) {
+            return false;
+        }
+
+        if (!this.modifier.equals(rhsItem.getModifier())) {
+            return false;
+        }
+
+        if (!this.element.equals(rhsItem.getElement())) {
+            return false;
+        }
+
         // Replace the next line
-        return false;
+        return true;
     }
 
     /**
@@ -229,7 +267,8 @@ public class Armour extends Item {
     @Override
     public int hashCode()
     {
-        return -1;
+        int result = name.hashCode() + material.hashCode() + modifier.hashCode() + element.hashCode();
+        return result;
     }
 
     /**
@@ -238,7 +277,13 @@ public class Armour extends Item {
     @Override
     public String toString()
     {
-        return "";
+        StringBuilder strBuilder = new StringBuilder(String.format("  Nme: %s%n", this.name));
+        strBuilder.append(String.format("  Dur: %d%n", this.durability))
+                  .append(String.format("  Def: %d%n", this.defense))
+                  .append(String.format("  Mtl: %s%n", this.material))
+                  .append(String.format("  Mdr: %s (Lvl %d)%n", this.modifier, this.modifierLevel))
+                  .append(String.format("  Emt: %s%n", this.element));
+        return strBuilder.toString();
     }
 }
 
